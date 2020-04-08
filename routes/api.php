@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+Use App\Messages;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('messages', function() {
+    return Messages::all();
+});
+
+Route::post('messages', 'MessagesController@insert_message');
+
+Route::get('test', function() {
+    event(new App\Events\MyEvent('hello world'));
+    return 'qweqwe';
 });

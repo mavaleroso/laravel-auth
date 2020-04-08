@@ -1,36 +1,52 @@
 <template>
-	<div class="container">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		  <a class="navbar-brand" href="#">Auth Example</a>
-		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-		    <span class="navbar-toggler-icon"></span>
-		  </button>
-
-		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-		    <ul class="navbar-nav mr-auto">
-		      <li class="nav-item">
-		        <router-link to="/" class="nav-link">
-		        	Home 
-		        </router-link>
-		      </li>
-		    </ul>
-		    <ul class="navbar-nav ml-auto">
-	    	  <li class="nav-item dropdown">
-		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          {{ app.user ? app.user.name : 'Account'}}
-		        </a>
-		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        		  <div v-if="!app.user">
-		          	<router-link to="/login" class="dropdown-item">Login</router-link>
-		          	<router-link to="/register" class="dropdown-item">Register</router-link>
-        		  </div>
-        		  <a v-else @click="logout" href="javasript:;" class="dropdown-item">Logout</a>
-		        </div>
-		      </li>
-		    </ul>
-		  </div>
-		</nav>
+	<!-- <v-app style="height: 30px;"> -->
+	<div>
+    <v-app-bar
+      color="orange darken-4"
+      dark
+	  min-height="auto"
+	  short
+    >
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-toolbar-title>Text Query</v-toolbar-title>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
+			<v-row
+			no-gutters
+			>
+			<v-btn
+				v-for="link in links"
+				:key="link.id"
+				color="white"
+				text
+				rounded
+				class="my-2 ml-2"
+				:to="link.path"
+			>
+			{{link.name}}
+			</v-btn>
+			<v-btn
+				color="white"
+				text
+				rounded
+				class="my-2 ml-2"
+				href="auth/logout_request"
+			>
+			Logout
+			</v-btn>
+			</v-row>
+			<v-spacer></v-spacer>
+    </v-app-bar>
 	</div>
+  <!-- </v-app> -->
 </template>
 
 <script>
@@ -39,15 +55,33 @@ export default {
 	props: ['app'],
 	data() {
 		return {
-
+			links: [
+				{
+					id: 1,
+					name: 'Dashboard',
+					path: '/'
+				},
+				{
+					id: 2,
+					name: 'Messages',
+					path: '/Messages'
+				},
+				{
+					id: 3,
+					name: 'Apis',
+					path: '/apis'
+				},
+				{
+					id: 4,
+					name: 'Config',
+					path: '/Config'
+				}
+			],
 		}
 	},
 	methods: {
 		logout() {
-			this.app.req.post('auth/logout').then(() => {
-				this.app.user = null;
-				this.$router.push('/login');
-			});
+			window.location.href = 'auth/logout_request'
 		}
 	}
 }

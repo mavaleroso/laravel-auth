@@ -1,19 +1,27 @@
 <template>
 	<div>
-		<navbar :app="this" class="mb-2"></navbar>
-		<spinner v-if="loading"></spinner>
-		<div v-else-if="initiated">
-			<router-view :app="this"></router-view>
-		</div>
+		<v-app>
+			<navbar :app="this"></navbar>
+			<div id="routerView">
+				<spinner v-if="loading"></spinner>
+				<div v-else-if="initiated" class="container elevation-15 br-3 rounded-lg mt-5 main-body">
+					<router-view :app="this"></router-view>
+				</div>
+			</div>
+			<footerNav :app="this">
+			</footerNav>
+		</v-app>
 	</div>
 </template>
 
 <script>
 import Navbar from './components/Navbar';
+import footerNav from './components/Footer';
 export default {
 	name: 'app',
 	components: {
-		Navbar
+		Navbar,
+		footerNav,
 	},
 	data() {
 		return {
@@ -22,7 +30,7 @@ export default {
 			initiated: false,
 			req: axios.create({
 				baseUrl: BASE_URL
-			})
+			}),
 		}
 	},
 	mounted() {

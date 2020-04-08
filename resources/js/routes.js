@@ -1,21 +1,27 @@
-import Home from './pages/Home';
-import Register from './pages/Register';
-import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Messages from './pages/Messages';
+import Config from './pages/Config';
+import Apis from './pages/Apis';
 
 export default [
 	{
 		path: '/',
-		component: Home,
-		name: 'home'
+		component: Dashboard,
+		name: 'dashboard'
 	},
 	{
-		path: '/register',
-		component: Register,
+		path: '/messages',
+		component: Messages,
 		name: 'register'
 	},
 	{
-		path: '/login',
-		component: Login,
-		name: 'login'
+		path: '/apis',
+		component: Apis,
+		name: 'apis'
+	},
+	{
+		path: '/config',
+		component: Config,
+		name: 'config'
 	}
 ]

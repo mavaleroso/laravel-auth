@@ -1,23 +1,52 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-
+import App from './App.vue';
+import Login from './Login.vue';
 import VueRouter from 'vue-router';
+import routes from './routes';
+import Vuetify from '../vuetify/vuetify';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+import VueNotification from "@kugatsu/vuenotification";
+import SmallDialog from "./components/SmallDialog";
+
+Vue.use(VueNotification, {
+    timer: 5,
+    error: {
+        background: "#F46A1F",
+        color: "white"
+    },
+    success: {
+        background: "#F77F00",
+        color: "white"
+    }
+});
+
 Vue.use(VueRouter);
 
-import routes from './routes';
 const router = new VueRouter({ routes });
 
-// const app = new Vue({
-//     el: '#app',
+Vue.component('spinner', require('vue-simple-spinner'));
+Vue.component('sDialog', SmallDialog);
+
+// router.beforeResolve((to, from, next) => {
+//     if (to.path) {
+//         NProgress.start();
+//     }
+//     next();
 // });
 
-Vue.component('spinner', require('vue-simple-spinner'));
+// router.afterEach(() => {
+//     NProgress.done();
+// });
 
-import App from './App.vue';
 
-new Vue({
-	router,
-	render: h => h(App)
-}).$mount('#app');
+
+const app = new Vue({
+	el: '#app',
+	components: {App, Login},
+    router,
+    vuetify: Vuetify,
+});
+

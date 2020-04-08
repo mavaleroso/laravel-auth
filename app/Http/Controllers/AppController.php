@@ -11,43 +11,44 @@ class AppController extends Controller
     public function init()
     {
     	$user = Auth::user();
-
     	return response()->json(['user' => $user], 200);
-    }
+	}
+	
+	public function main()
+	{
+		if(session()->has('user_id')){
+			return view('welcome');
+		} else {
+			return redirect()->route('login');
+		}
+	}
 
-    public function login(Request $request)
+	public function login()
+	{
+		if (session()->has('user_id')) {
+			return redirect()->route('main');
+		} else {
+			return view('auth');
+		}
+	}
+
+    public function login_request(Request $request)
     {
     	if (Auth::attempt(['username' => $request->username, 'password' => $request->password], true)) {
-    		return response()->json(Auth::user(), 200);
+			$user = Auth::user();
+            session()->put('user_id', $user->id);
+            session()->put('user_uname', $user->username);
+            Auth::login($user);
     	} else {
     		return response()->json(['error' => 'Could not log you in.'], 401);
     	}
     }
 
-    public function register(Request $request)
+
+    public function logout_request()
     {
-
-    	$user = User::where('username', $request->username)->first();
-
-    	if (isset($user->id)) {
-    		return response()->json(['error' => 'Username already exists.'], 401);
-    	}
-
-    	$user = new User();
-
-    	$user->name = $request->name;
-    	$user->username = $request->username;
-    	$user->password = bcrypt($request->password);
-
-    	$user->save();
-
-    	Auth::login($user);
-
-    	return response()->json($user, 200);
-    }
-
-    public function logout()
-    {
-    	Auth::logout();
+		Auth::logout();
+        session()->flush();
+        return redirect()->route('login');
     }
 }

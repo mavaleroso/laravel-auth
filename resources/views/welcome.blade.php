@@ -7,10 +7,13 @@
         <title>Auth Example</title>
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
-
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/custom.css') }}">
+        <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <app></app>
+        </div>
         <script>
             var BASE_URL = '{{ URL::to('/') }}';
         </script>
